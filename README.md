@@ -1,6 +1,6 @@
-# Docker image & algorithm submission for Category 2 of SurgVU Challenge 2024
+# Docker image & algorithm submission for Category 2 of SurgVU Challenge 2025
 
-This repository has everything you and your team need to make an algorithm submission for the [Surgical Visual Understanding Challenge](https://surgvu24.grand-challenge.org/) Category 2.
+This repository has everything you and your team need to make an algorithm submission for the [Surgical Visual Understanding Challenge](https://surgvu25.grand-challenge.org/) Category 2.
 
 Be sure that you have a verified account on Grand Challenge and are accepted as a participant in the SurgVU challenge.
 You should be able to submit your Docker container/algorithm on the challenge website when the submission opens.
@@ -21,40 +21,10 @@ For category 2 of [Surgical Visual Understanding Challenge 24](https://surgvu24.
 
 ### Category #2 – surgical step classification:  
 
-The output json file needs to be a dictionary containing the set of surgical steps detected in each frame (as integers):
+The output json file needs to contain the answer to the activity being performed in the provided video clip (input):
 
 ```
-[
-   {
-      "frame_nr":0,
-      "surgical_step":3
-   },
-   {
-      "frame_nr":1,
-      "surgical_step":4
-   },
-   {
-      "frame_nr":2,
-      "surgical_step":3
-   },
-   {
-      "frame_nr":3,
-      "surgical_step":0
-   },
-]
-```
-
-Below is the list of surgical steps (Integers are the index of the list, from 0 to 7):
-
-```
-step_list = ["range_of_motion",
-            "rectal_artery_vein",
-            "retraction_collision_avoidance",
-            "skills_application",
-            "suspensory_ligaments",
-            "suturing",
-            "uterine_horn",
-            "other"]
+{"answer": "Esophageal hiatus hernia with gastric fundus entrapment."}
 ```
 
 
@@ -66,7 +36,7 @@ TODO update this
 1. First, clone this repository:
 
 ```
-git clone https://github.com/aneeqzia-isi/surgtoolloc2022-category-2.git
+git clone https://github.com/isi-challenges/surgvu2025-category2-submission.git
 ```
 
 2. Our `Dockerfile` should have everything you need, but you may change it to another base image/add your algorithm requirements if your algorithm requires it:
@@ -105,4 +75,4 @@ If something does not work for you, please do not hesitate to [contact us](mailt
 
 The repository is greatly inspired and adapted from [MIDOG reference algorithm](https://github.com/DeepPathology/MIDOG_reference_docker), [AIROGS reference algorithm](https://github.com/qurAI-amsterdam/airogs-example-algorithm) and [SLCN reference algorithm](https://github.com/metrics-lab/SLCN_challenge)
 
-# surgvu2024-category2-submission
+# surgvu2025-category2-submission
