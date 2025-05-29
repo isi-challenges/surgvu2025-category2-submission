@@ -48,7 +48,7 @@ class SurgVU_classify(ClassificationAlgorithm):
             index_key='input_video',
             file_loaders={'input_video': VideoLoader()},
             input_path=Path("/input/") if execute_in_docker else Path("./test/"),
-            output_file=Path("/output/surgical-step-classification.json") if execute_in_docker else Path("./output/surgical-step-classification.json"),
+            output_file=Path("/output/surgical-understanding-answer.json") if execute_in_docker else Path("./output/surgical-understanding-answer.json"),
             validators=dict(
                 input_video=(
                     UniquePathIndicesValidator(),
@@ -59,24 +59,6 @@ class SurgVU_classify(ClassificationAlgorithm):
         ###                                                                                                     ###
         ###  TODO: adapt the following part for creating your model and loading weights                         ###
         ###                                                                                                     ###
-
-        self.step_list = ["range_of_motion",
-                          "rectal_artery_vein",
-                          "retraction_collision_avoidance",
-                          "skills_application",
-                          "suspensory_ligaments",
-                          "suturing",
-                          "uterine_horn",
-                          "other"]
-        print(self.step_list)
-
-    def dummy_step_prediction_model(self):
-        random_step_prediction = random.randint(0, len(self.step_list)-1)
-        return random_step_prediction
-
-    def step_predict_json_sample(self):
-        single_output_dict = {"frame_nr": 1, "surgical_step": None}
-        return single_output_dict
 
     def process_case(self, *, idx, case):
         # Input video would return the collection of all frames (cap object)
@@ -92,26 +74,29 @@ class SurgVU_classify(ClassificationAlgorithm):
         with open(str(self._output_file), "w") as f:
             json.dump(self._case_results[0], f)
 
-    def predict(self, fname) -> Dict:
+    def predict(self, fname: str) -> Dict:
         """
         Inputs:
         fname -> video file path
 
         Output:
-        tools -> list of prediction dictionaries (per frame) in the correct format as described in documentation 
+        tools -> list of prediction dictionaries (per frame) in the correct format as described in documentation
         """
 
+        # Define the path to the question JSON file
+        question_file = "./test/question.json"
+
+        # Load the question from the JSON file
+        with open(question_file, 'r') as f:
+            question_data = json.load(f)
+
         print('Video file to be loaded: ' + str(fname))
+        print('Question loaded: ' + str(question_data))
 
-
-        ###
-        ###                                                                     ###
-        ###  TODO: adapt the following part for YOUR submission: return the prediction as a json file with the answer in the same format as below ###
-        ###                                                                     ###
-
-        # Generate fixed JSON output
+        # Generate fixed JSON output incorporating the question
         fixed_output = {
-            "answer": "Esophageal hiatus hernia with gastric fundus entrapment."
+            "answer": "Esophageal hiatus hernia with gastric fundus entrapment.",
+            "question": question_data.get("question")
         }
         return fixed_output
 
