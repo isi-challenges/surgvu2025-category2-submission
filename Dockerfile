@@ -1,28 +1,24 @@
-FROM python:3.11
+FROM --platform=linux/amd64 pytorch/pytorch AS example-algorithm-amd64
+# Use a 'large' base container to show-case how to load pytorch and use the GPU (when enabled)
 
-RUN groupadd -r algorithm && useradd -m --no-log-init -r -g algorithm algorithm
+# Ensures that Python output to stdout/stderr is not buffered: prevents missing information when terminating
+ENV PYTHONUNBUFFERED=1
 
-RUN mkdir -p /opt/algorithm /input /output \
-    && chown algorithm:algorithm /opt/algorithm /input /output
+RUN groupadd -r user && useradd -m --no-log-init -r -g user user
+USER user
 
-RUN rm -rf /var/lib/apt/lists/*
-RUN apt-get clean -y
+WORKDIR /opt/app
 
-RUN apt-get update -y
-RUN apt-get install ffmpeg libsm6 libxext6  -y
+COPY --chown=user:user requirements.txt /opt/app/
+COPY --chown=user:user resources /opt/app/resources
 
-USER algorithm
+# You can add any Python dependencies to requirements.txt
+RUN python -m pip install \
+    --user \
+    --no-cache-dir \
+    --no-color \
+    --requirement /opt/app/requirements.txt
 
-WORKDIR /opt/algorithm
+COPY --chown=user:user inference.py /opt/app/
 
-ENV PATH="/home/algorithm/.local/bin:${PATH}"
-
-RUN python -m pip install --user -U pip
-
-
-COPY --chown=algorithm:algorithm requirements.txt /opt/algorithm/
-RUN python -m pip install --user -r requirements.txt
-
-COPY --chown=algorithm:algorithm process.py /opt/algorithm/
-
-ENTRYPOINT python -m process $0 $@
+ENTRYPOINT ["python", "inference.py"]
