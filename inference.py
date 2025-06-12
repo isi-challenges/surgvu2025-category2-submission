@@ -73,14 +73,9 @@ def interf0_handler():
         print(f.read())
 
     # For now, let us make bogus predictions
-    output_surgical_step_classification = {"key": "value", "None": None}
     output_visual_context_response = "Example String"
 
     # Save your output
-    write_json_file(
-        location=OUTPUT_PATH / "surgical-step-classification.json",
-        content=output_surgical_step_classification,
-    )
     write_json_file(
         location=OUTPUT_PATH / "visual-context-response.json",
         content=output_visual_context_response,
