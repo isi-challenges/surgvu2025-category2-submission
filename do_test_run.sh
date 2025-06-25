@@ -73,7 +73,6 @@ run_docker_forward_pass() {
     docker run --rm \
         --platform=linux/amd64 \
         --network none \
-        --gpus all \
         --volume "${INPUT_DIR}/${interface_dir}":/input:ro \
         --volume "${OUTPUT_DIR}/${interface_dir}":/output \
         --volume "$DOCKER_NOOP_VOLUME":/tmp \
