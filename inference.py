@@ -58,7 +58,7 @@ def interf0_handler():
 
 
     # Process the inputs: any way you'd like
-    _show_torch_cuda_info()
+    #_show_torch_cuda_info()
 
     # Some additional resources might be required, include these in one of two ways.
 
@@ -78,10 +78,12 @@ def interf0_handler():
     output_visual_context_response = "Example String"
     print("Output: ", output_visual_context_response)
     # Save your output
+    
     write_json_file(
         location=OUTPUT_PATH / "visual-context-response.json",
         content=output_visual_context_response,
     )
+    print('output saved to  ', OUTPUT_PATH)
 
     return 0
 
@@ -92,7 +94,7 @@ def get_interface_key():
     inputs = load_json_file(
         location=INPUT_PATH / "inputs.json",
     )
-    print(inputs)
+    print('These are the inputs:' , inputs)
     socket_slugs = [sv["interface"]["slug"] for sv in inputs]
     return tuple(sorted(socket_slugs))
 

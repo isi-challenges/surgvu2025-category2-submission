@@ -1,5 +1,6 @@
-FROM --platform=linux/amd64 pytorch/pytorch AS example-algorithm-amd64
+FROM --platform=linux/amd64 docker.io/library/python:3.11-slim AS example-evaluation-amd64
 # Use a 'large' base container to show-case how to load pytorch and use the GPU (when enabled)
+#FROM --platform=linux/amd64 pytorch/pytorch AS example-algorithm-amd64
 
 # Ensures that Python output to stdout/stderr is not buffered: prevents missing information when terminating
 ENV PYTHONUNBUFFERED=1
