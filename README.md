@@ -24,7 +24,7 @@ For category 2 of [Surgical Visual Understanding Challenge 24](https://surgvu24.
 The output json file needs to contain the answer to the activity being performed in the provided video clip (input):
 
 ```
-{"answer": "Esophageal hiatus hernia with gastric fundus entrapment."}
+"Yes, suturing is expected to be part of the procedure."
 ```
 
 
